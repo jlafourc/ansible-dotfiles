@@ -1,0 +1,8 @@
+- name: Install pulseaudio packages
+  apt: name={{item}} state=installed
+  become: yes
+  become_method: sudo
+  with_items:
+       - pulseaudio
+       - pasystray
+       - pavucontrol

@@ -1,0 +1,13 @@
+---
+- git:
+    repo: 'https://github.com/stark/siji'
+    dest: /home/jlafourc/Documents/InstallSources/siji
+
+- name: Install
+  command: ./install.sh
+  args:
+    chdir: /home/jlafourc/Documents/InstallSources/siji
+
+- name: Font config 
+  script: font-config.sh
+  become: yes

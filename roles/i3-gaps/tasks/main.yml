@@ -1,0 +1,45 @@
+---
+- git:
+    repo: 'https://github.com/Airblader/i3.git'
+    dest: /home/jlafourc/Documents/InstallSources/i3-gaps
+    version: gaps
+  register: git_result
+
+- debug: var=git_result 
+
+- name: Install autoconf.
+  apt: name={{item}} state=installed
+  become: yes
+  become_method: sudo
+  with_items:
+       - autoconf
+       - libxcb-keysyms1-dev 
+       - libpango1.0-dev 
+       - libxcb-util0-dev 
+       - xcb 
+       - libxcb1-dev 
+       - libxcb-icccm4-dev 
+       - libyajl-dev 
+       - libev-dev 
+       - libxcb-xkb-dev 
+       - libxcb-cursor-dev 
+       - libxkbcommon-dev 
+       - libxcb-xinerama0-dev 
+       - libxkbcommon-x11-dev 
+       - libstartup-notification0-dev 
+       - libxcb-randr0-dev 
+       - libxcb-xrm0 
+       - libxcb-xrm-dev
+
+- name: Make
+  script: install.sh
+  args:
+    chdir: /home/jlafourc/Documents/InstallSources/i3-gaps
+  when: git_result.changed
+
+- name: Make install 
+  make:
+    chdir: /home/jlafourc/Documents/InstallSources/i3-gaps/build
+    target: install
+  become: yes
+  when: git_result.changed

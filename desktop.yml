@@ -1,0 +1,10 @@
+---
+- hosts: desktop
+  roles:
+    - pulseaudio
+    - pcmanfm
+    - vscode
+    - docker
+    - i3-gaps
+    - polybar
+    - siji-font

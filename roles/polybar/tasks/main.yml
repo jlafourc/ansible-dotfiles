@@ -1,0 +1,48 @@
+---
+- git:
+    repo: 'https://github.com/jaagr/polybar.git'
+    dest: /home/jlafourc/Documents/InstallSources/polybar
+    version: 3.1.0
+  register: git_result
+
+- name: Install deps.
+  apt: name={{item}} state=installed
+  become: yes
+  become_method: sudo
+  with_items:
+    - cmake
+    - cmake-data
+    - libcairo2-dev
+    - libxcb1-dev
+    - libxcb-ewmh-dev
+    - libxcb-icccm4-dev
+    - libxcb-image0-dev
+    - libxcb-randr0-dev
+    - libxcb-util0-dev
+    - libxcb-xkb-dev
+    - pkg-config
+    - python-xcbgen
+    - xcb-proto
+    - libxcb-xrm-dev
+    - libxcb-cursor-dev
+    - i3-wm
+    - libjsoncpp-dev
+    - libpulse-dev
+    - libmpdclient-dev
+    - libiw-dev
+    - libcurl4-openssl-dev
+    - fonts-font-awesome
+    - fonts-materialdesignicons-webfont
+
+- name: Make
+  script: install.sh
+  args:
+    chdir: /home/jlafourc/Documents/InstallSources/polybar
+  when: git_result.changed
+
+- name: Make install 
+  make:
+    chdir: /home/jlafourc/Documents/InstallSources/polybar/build
+    target: install
+  become: yes
+  when: git_result.changed
